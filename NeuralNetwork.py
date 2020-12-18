@@ -101,7 +101,7 @@ class NeuralNetwork(object):
         '''
         self.weights_hidden_to_output += delta_weights_h_o * self.lr / n_records
         self.weights_input_to_hidden += delta_weights_i_h * self.lr / n_records
-        
+
     def run(self, features):
         ''' Run a forward pass through the network with input features 
         
@@ -109,6 +109,10 @@ class NeuralNetwork(object):
             ---------
             features: 1D array of feature values
         '''
-        
-        pass
+        # Fwd pass
+        hidden_input = np.dot(features, self.weights_input_to_hidden)
+        hidden_output = self.activation_function(hidden_input)
+        output = np.dot(hidden_output, self.weights_hidden_to_output) # Linear activation fn here
+
+        return output
 
