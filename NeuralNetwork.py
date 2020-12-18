@@ -17,6 +17,9 @@ class NeuralNetwork(object):
                                        (self.hidden_nodes, self.output_nodes))
         self.lr = learning_rate
 
+        # Use sigmoid as hidden layer activation function
+        self.activation_function = lambda x: 1/(1+np.exp(-x))
+
     def train(self, features, targets):
         ''' Train the network on batch of features and targets. 
         
