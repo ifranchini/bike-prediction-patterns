@@ -8,7 +8,14 @@ class NeuralNetwork(object):
         self.hidden_nodes = hidden_nodes
         self.output_nodes = output_nodes
 
-        
+        # Initialize weights
+        # Weight initilaization should be a function of the input layer size (1/sqrt(n))
+        self.weights_input_to_hidden = np.random.normal(0.0, self.input_nodes**-0.5, 
+                                       (self.input_nodes, self.hidden_nodes))
+
+        self.weights_hidden_to_output = np.random.normal(0.0, self.hidden_nodes**-0.5, 
+                                       (self.hidden_nodes, self.output_nodes))
+        self.lr = learning_rate
 
     def train(self, features, targets):
         ''' Train the network on batch of features and targets. 
