@@ -74,18 +74,19 @@ class NeuralNetwork(object):
         '''
         # Calculate error
         error = y - final_outputs
+
         # No Non-linearity for error term (delta2), gradient == 1
         output_error_term = error
 
         # Hidden layer error contribution: error = (delta2 * weights)
-        hidden_error = np.dot(output_error_term, delta_weights_h_o)
+        hidden_error = np.dot(output_error_term, self.weights_hidden_to_output.T)
 
         # Backpropagate hiden error to input layer: hidden_error_term (or delta1) = (error * gradient)
         hidden_error_term = hidden_error * hidden_outputs * (1-hidden_outputs)
 
         # Update weigths
-        delta_weights_i_h += np.dot(hidden_error_term, X)
-        delta_weights_h_o += np.dot(output_error_term, hidden_outputs)
+        delta_weights_i_h += hidden_error_term * X[:, None]
+        delta_weights_h_o += np.dot(hidden_outputs[:, None], output_error_term[:, None]) #hidden_outputs * output_error_term
 
         return delta_weights_i_h, delta_weights_h_o
 
