@@ -30,8 +30,13 @@ class NeuralNetwork(object):
             targets: 1D array of target values
         
         '''
-        pass
 
+        n_records = features.shape[0]
+        # Initial delta weights as zeros
+        delta_weights_i_h = np.zeros(self.weights_input_to_hidden.shape)
+        delta_weights_h_o = np.zeros(self.weights_hidden_to_output.shape)
+
+        # Run a forward pass
 
 
     def forward_pass_train(self, X):
@@ -42,8 +47,10 @@ class NeuralNetwork(object):
             X: features batch
 
         '''
-        
-        pass
+        hidden_input = np.dot(X, self.weights_input_to_hidden) # h = W*x
+        hidden_output = self.activation_function(hidden_input) # f(h)
+        output = np.dot(hidden_output, self.weights_hidden_to_output) # Linear Output activation function f(x) = x
+        return output, hidden_output
 
     def backpropagation(self, final_outputs, hidden_outputs, X, y, delta_weights_i_h, delta_weights_h_o):
         ''' Implement backpropagation
